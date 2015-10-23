@@ -13,7 +13,7 @@ sub new
   my $pkg = shift;
   my $obj = Collectd::Graph::Type->new (@_);
   $obj->{'data_sources'} = [qw(shortterm midterm longterm)];
-  $obj->{'rrd_opts'} = ['-v', 'System load'];
+  $obj->{'rrd_opts'} = ['-v', 'run-queue count'];
   $obj->{'rrd_title'} = 'System load';
   $obj->{'rrd_format'} = '%.2lf';
   $obj->{'colors'} = [qw(00ff00 0000ff ff0000)];
@@ -37,7 +37,7 @@ sub getRRDArgs
 
   my $faded_green = get_faded_color ('00ff00');
 
-  return (['-t', 'System load', '-v', 'System load',
+  return (['-t', $ident->{hostname} . ' System load', '-v', 'run-queue count',
     "DEF:s_min=${filename}:shortterm:MIN",
     "DEF:s_avg=${filename}:shortterm:AVERAGE",
     "DEF:s_max=${filename}:shortterm:MAX",

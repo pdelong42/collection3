@@ -34,7 +34,7 @@ sub new
   my $obj = Collectd::Graph::Type->new (@_);
   $obj->{'data_sources'} = [qw(free used)];
   $obj->{'rrd_opts'} = ['-v', 'Bytes'];
-  $obj->{'rrd_title'} = 'Disk space ({instance})';
+  $obj->{'rrd_title'} = '{hostname} Disk space ({instance})';
   $obj->{'rrd_format'} = '%5.1lf%sB';
   $obj->{'colors'} = [qw(00b000 ff0000)];
 

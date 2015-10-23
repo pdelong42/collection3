@@ -511,18 +511,18 @@ sub get_selected_files
   for (qw(hostname plugin plugin_instance type type_instance))
   {
     my $part = $_;
-    my @temp = param ($part);
-    if (!@temp)
+    my $temp = param ($part);
+    if (!$temp)
     {
       next;
     }
     elsif (($part eq 'plugin') || ($part eq 'type'))
     {
-      $ident->{$part} = [map { _sanitize_generic_no_minus ($_) } (@temp)];
+      $ident->{$part} = [map { _sanitize_generic_no_minus ($_) } ($temp)];
     }
     else
     {
-      $ident->{$part} = [map { _sanitize_generic_allow_minus ($_) } (@temp)];
+      $ident->{$part} = [map { _sanitize_generic_allow_minus ($_) } ($temp)];
     }
   }
 
@@ -553,13 +553,11 @@ sub get_host_selection
     $ret{$_} = 0;
   }
 
-  for (param ('hostname'))
+  my $temp = param ('hostname');
+  my $host = _sanitize_generic_allow_minus ($temp);
+  if (defined ($ret{$host}))
   {
-    my $host = _sanitize_generic_allow_minus ($_);
-    if (defined ($ret{$host}))
-    {
-      $ret{$host} = 1;
-    }
+    $ret{$host} = 1;
   }
 
   if (wantarray ())
@@ -582,12 +580,10 @@ sub get_plugin_selection
     $ret{$_} = 0;
   }
 
-  for (param ('plugin'))
+  my $temp = param ('plugin');
+  if (defined ($ret{$temp}))
   {
-    if (defined ($ret{$_}))
-    {
-      $ret{$_} = 1;
-    }
+    $ret{$temp} = 1;
   }
 
   if (wantarray ())

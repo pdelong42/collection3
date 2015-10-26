@@ -227,6 +227,8 @@ HTML
     <script type="text/javascript" src="../share/navigate.js"></script>
   </head>
   <body onload="nav_init ($begin, $end);">
+  <table>
+  <tr>
 HTML
   $html_started = 1;
 }
@@ -234,6 +236,8 @@ HTML
 sub end_html
 {
   print <<HTML;
+  </tr>
+  </table>
   </body>
 </html>
 HTML
@@ -272,7 +276,7 @@ sub show_selector
     <form action="${\script_name ()}" method="get">
       <fieldset>
         <legend>Data selection</legend>
-        <select name="hostname" multiple="multiple" size="15">
+        <select name="hostname" multiple="multiple" size="30">
 HTML
   for (sort (keys %$host_selection))
   {
@@ -285,7 +289,7 @@ HTML
   }
   print <<HTML;
         </select>
-	<select name="plugin" multiple="multiple" size="15">
+	<select name="plugin" multiple="multiple" size="30">
 HTML
   for (sort (keys %$plugin_selection))
   {
@@ -325,6 +329,7 @@ sub action_list_hosts
   show_selector ();
 
   my @hosts = get_all_hosts ();
+  print "    <td>\n";
   print "    <ul>\n";
   for (sort @hosts)
   {
@@ -334,6 +339,7 @@ sub action_list_hosts
     print qq#      <li><a href="$url">$name</a></li>\n#;
   }
   print "    </ul>\n";
+  print "    </td>\n";
 
   end_html ();
 } # action_list_hosts
@@ -421,6 +427,7 @@ sub action_show_selection
   }
 #print STDOUT Data::Dumper->Dump ([$types], ['types']);
 
+  print qq#    <td>\n#;
   print qq#    <table>\n#;
   for (sort (keys %$types))
   {
@@ -482,6 +489,7 @@ EOF
   }
 
   print "    </table>\n";
+  print "    </td>\n";
   end_html ();
 }
 
